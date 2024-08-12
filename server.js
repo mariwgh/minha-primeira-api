@@ -7,11 +7,51 @@ const rafael = {
     nome: "rafael",
     idade: "27",
     fruta: "caju"
+};
+
+const mari = {
+    nome: "mariana",
+    user: "mariwvs",
+    email: "mari@gmail.com",
+    password: "senha"
+};
+
+const rafaelly = {
+    nome: "rafaelly",
+    user: "rafawvs",
+    email: "rafa@gmail.com",
+    password: "senha"
 }
 
+//res -> responder
+//get -> pega
+
 guardinha.get("/pegarUsuario", (req, res) => {
-    res.send(rafael);
+    const userEmail = req.query.email
+
+    let userReq = null;
+    for (let user of users) {
+        if (user.email === userEmail){
+            userReq = user;
+            break;
+        }
+    }
+
+    if(userReq === null){
+        return res.status(404).send("Usuario nao encontrado");
+    }
+
+    // const user = users.filter((user) => user.email === userEmail);
+
+    return res.status(200).send(userReq);
 });
+
+guardinha.post("/usuario", (req, res) => {
+    const newUser = req.body;
+    users.push(newUser);
+    res.send(users)
+})
+
 
 guardinha.get("/", (req, res) => {
     res.send("HELLO, WORLD!");
